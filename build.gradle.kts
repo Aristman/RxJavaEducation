@@ -13,6 +13,9 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.31")
+
+    // RxJava 3
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.1")
 }
 
 tasks.test {
