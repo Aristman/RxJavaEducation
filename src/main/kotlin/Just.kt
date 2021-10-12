@@ -25,7 +25,9 @@ fun main() {
 
         override fun onError(e: Throwable) {}
 
-        override fun onComplete() {}
+        override fun onComplete() {
+            println("finish")
+        }
     })
 
 
