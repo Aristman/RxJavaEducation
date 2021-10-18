@@ -1,4 +1,4 @@
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.Observable
 
 fun <T> repeatWithLog(input: T): T {
     println("Вызов функции с параметом: $input")
