@@ -1,4 +1,4 @@
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.Observable
 
 fun main() {
     Observable.just(1,2,3).subscribe(System.out::println)

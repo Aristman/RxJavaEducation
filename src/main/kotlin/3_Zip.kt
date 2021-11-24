@@ -1,4 +1,4 @@
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.Observable
 
 fun main() {
     val a = listOf(1, 2, 3)
