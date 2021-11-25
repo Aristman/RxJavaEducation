@@ -1,20 +1,31 @@
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
+fun httpRequest(url: String): Response =
+    OkHttpClient.Builder()
+        .build()
+        .newCall(
+            Request.Builder()
+                .url(url = url)
+                .build()
+        )
+        .execute()
+
+
 fun main() {
-    val subject = PublishSubject.create<String>()
+    val subject = BehaviorSubject.create<String>()
     val observable =
-        subject
-            .map {
-                OkHttpClient.Builder()
-                    .build()
-                    .newCall(Request.Builder().url(it).build()).execute()
+        subject.flatMapSingle { url ->
+            Single.fromCallable {
+                httpRequest(url)
             }
-            .subscribeOn(Schedulers.io())
+        }
+
     observable
         .subscribe(
             { println(it.body?.string().orEmpty()) },
