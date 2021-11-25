@@ -11,21 +11,19 @@ private val json = Json { ignoreUnknownKeys = true }
 private fun request(url: String) = Request.Builder().url(url).build()
 
 fun getData(): Observable<String> =
-    Observable
-        .create { emitter ->
-            val okHttpClient = OkHttpClient.Builder().build()
-            json.decodeFromString<CharactersNW>(
-                okHttpClient.newCall(request(REQUEST_URL)).execute().body?.string().orEmpty()
-            ).results.map { character ->
-                val url = character.location.url
-                emitter.onNext(
-                    OkHttpClient
-                        .Builder()
-                        .build()
-                        .newCall(request(url))
-                        .execute().body?.string().orEmpty()
-                )
-            }
+    Observable.fromCallable {
+        OkHttpClient.Builder()
+            .build()
+            .newCall(request(REQUEST_URL))
+            .execute().body?.string().orEmpty()
+    }
+        .flatMapIterable { json.decodeFromString<CharactersNW>(it).results }
+        .map {
+            OkHttpClient.Builder()
+                .build()
+                .newCall(request(it.location.url))
+                .execute()
+                .body?.string().orEmpty()
         }
 
 fun main() {
