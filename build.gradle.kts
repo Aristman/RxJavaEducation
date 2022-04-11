@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
 }
 
 group = "ru.marslab"
@@ -16,6 +17,9 @@ dependencies {
 
     // RxJava 3
     implementation ("io.reactivex.rxjava2:rxjava:2.2.21")
+
+    implementation ("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 }
 
 tasks.test {
