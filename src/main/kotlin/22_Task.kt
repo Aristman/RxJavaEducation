@@ -1,5 +1,6 @@
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import model.NewsNW
 
 fun main() {
     val json = Json {
@@ -14,4 +15,5 @@ fun main() {
             { println("Error request > ${it.message}") }
         )
     println("the end")
+    dispose.dispose()
 }
